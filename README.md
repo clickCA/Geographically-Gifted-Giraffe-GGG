@@ -31,3 +31,11 @@ Travelers often lack engaging and accessible resources to learn about destinatio
 ```python
 pip install -r requirements.txt
 ```
+
+run the server:
+
+```python
+uvicorn main:app --reload
+```
+
+you can see swagger in [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
