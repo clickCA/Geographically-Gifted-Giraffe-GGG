@@ -23,6 +23,7 @@ def text_to_speech(text):
             print("Audio content written to file", output_file)
     except Exception as e:
         print("Cannot convert text to speech")
+        print(e)
 
 
 def main():
