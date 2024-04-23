@@ -16,22 +16,26 @@ def detect_landmarks(path):
     image = vision.Image(content=content)
 
     response = client.landmark_detection(image=image)
-    landmarks = response.landmark_annotations
-    print("Landmarks:")
-
-    for landmark in landmarks:
-        print(landmark.description)
-        for location in landmark.locations:
-            lat_lng = location.lat_lng
-            print(f"Latitude {lat_lng.latitude}")
-            print(f"Longitude {lat_lng.longitude}")
-
     if response.error.message:
         raise Exception(
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
 
+    landmarks = response.landmark_annotations
+    if landmarks == []:  # "Cannot Detech Location"
+        # raise Exception("Cannot Detech Location")
+        return
+    result = dict()
+    result["landmark"] = landmarks[0].description
+    loc = landmarks[0].locations
+    result["latitude"] = loc[0].lat_lng.latitude
+    result["longtitude"] = loc[0].lat_lng.longitude
+    return result
 
-img = input("What's your image path? eg. test_img.png\n>>")
-detect_landmarks(img)
+
+# if image is detectable
+# return {'landmark': 'Taj Mahal', 'latitude': 27.175144799999998, 'longtitude': 78.04214219999999} else return None
+for i in range(1, 11):
+    name = f"./test_img/test{i}.jpg"
+    print(detect_landmarks(name))
