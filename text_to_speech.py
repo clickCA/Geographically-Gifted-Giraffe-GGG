@@ -24,12 +24,13 @@ def text_to_speech(text):
     except Exception as e:
         print("Cannot convert text to speech")
         print(e)
+    return output_file
 
 
 def main():
     # The response's audio_content is binary.
-    text_to_speech(TEXT)
-
+    file_path = text_to_speech(TEXT)
+    print(file_path)
 
 if __name__ == "__main__":
     main()
