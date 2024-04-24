@@ -5,6 +5,8 @@ from IPython.display import Markdown
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
+from bs4 import BeautifulSoup
+from markdown import markdown
 
 def generate_gemini_content(place):
   # Load the environment variables from the .env file
@@ -25,6 +27,13 @@ def generate_gemini_content(place):
   response = model.generate_content(content)
   return response.text
 
+def convert_md_to_text(text):
+  html = markdown(text)
+  fommated_string = "".join(
+      BeautifulSoup(html, features="html.parser").findAll(string=True)
+  )
+  return (fommated_string)
+  
 if __name__ == "__main__":
   place = "Victory Monument in Bangkok, Thailand"
   result = generate_gemini_content(place)
